@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductStoreAPI.Infrastructure.Cloudinary
+namespace ProductStoreAPI.Infrastructure.Implement.CloudinaryImage
 {
     public class CloudinarySettings
     {

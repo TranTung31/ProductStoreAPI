@@ -1,13 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using ProductStoreAPI.Application.Interfaces;
 using ProductStoreAPI.Application.Mappings;
+using ProductStoreAPI.Infrastructure;
 using ProductStoreAPI.Infrastructure.Context;
 using ProductStoreAPI.Infrastructure.Implement.Catalog.Categories;
 using ProductStoreAPI.Infrastructure.Implement.Catalog.Products;
 
 var builder = WebApplication.CreateBuilder(args);
-//var cloudinarySettings = Configuration.GetSection();
-
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -20,8 +19,9 @@ builder.Services.AddDbContext<ProductStoreDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ProductStoreDB")));
 
 // Add DI
-builder.Services.AddScoped<ICategoryService, CategorySevice>();
-builder.Services.AddScoped<IProductService, ProductService>();
+//builder.Services.AddScoped<ICategoryService, CategorySevice>();
+//builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddInfrastructure(builder.Configuration);
 
 // Add AutoMapper.
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);

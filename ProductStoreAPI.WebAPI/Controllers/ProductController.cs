@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProductStoreAPI.Application.DTOs.Catalog.Products;
-using ProductStoreAPI.Application.Interfaces;
+using ProductStoreAPI.Application.Interfaces.Catalog.Products;
 
 namespace ProductStoreAPI.WebAPI.Controllers
 {

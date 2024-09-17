@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductStoreAPI.Application.Interfaces.Catalog.Products
+namespace ProductStoreAPI.Application.Interfaces.Cloudinary
 {
-    public interface IProductImageService
+    public interface ICloudinaryService
     {
         Task<string> UploadSingleImage(IFormFile file);
-        Task<List<string>> UploadMultipleImage(List<IFormFile> files);
+        Task<List<string>> UploadMultipleImages(List<IFormFile> files);
     }
 }
