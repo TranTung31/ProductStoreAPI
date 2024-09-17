@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductStoreAPI.Application.Interfaces
+namespace ProductStoreAPI.Application.Interfaces.Catalog.Products
 {
     public interface IProductService
     {

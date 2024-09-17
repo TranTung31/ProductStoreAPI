@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using ProductStoreAPI.Application.DTOs.Catalog.Products;
 using ProductStoreAPI.Application.DTOs.Common.ResponseNotification;
-using ProductStoreAPI.Application.Interfaces;
 using ProductStoreAPI.Application.Interfaces.Catalog.Products;
+using ProductStoreAPI.Application.Interfaces.Cloudinary;
 using ProductStoreAPI.Core.Entities;
 using ProductStoreAPI.Infrastructure.Context;
 using System;
@@ -18,15 +17,15 @@ namespace ProductStoreAPI.Infrastructure.Implement.Catalog.Products
     public class ProductService : IProductService
     {
         private readonly ProductStoreDbContext _context;
-        private readonly IProductImageService _productImageService;
         private readonly IMapper _mapper;
+        private readonly ICloudinaryService _cloudinaryService;
         private static int PAGE_SIZE { get; set; } = 3;
 
-        public ProductService(ProductStoreDbContext context, IProductImageService productImageService, IMapper mapper)
+        public ProductService(ProductStoreDbContext context, IMapper mapper, ICloudinaryService cloudinaryService)
         {
             _context = context;
-            _productImageService = productImageService;
             _mapper = mapper;
+            _cloudinaryService = cloudinaryService;
         }
 
         public async Task<ApiResult<List<ProductResponseDto>>> GetProductsAsync(string? search, int page)
@@ -75,6 +74,21 @@ namespace ProductStoreAPI.Infrastructure.Implement.Catalog.Products
                 }
 
                 var result = _mapper.Map<ProductResponseDto>(product);
+                var query = from productItem in _context.Products
+                            join categoryItem in _context.Categories on productItem.CategoryId equals categoryItem.Id
+                            select new
+                            {
+                                CategoryId = categoryItem.Id,
+                                CategoryName = categoryItem.Name,
+                            };
+                var categoryList = await query.ToListAsync();
+                var categoryResult = await query.FirstOrDefaultAsync(x => x.CategoryId == product.CategoryId);
+
+                if (categoryResult != null)
+                {
+                    result.CategoryName = categoryResult.CategoryName;
+                }
+
                 return new ApiSuccessResult<ProductResponseDto>(result, "Lấy sản phẩm theo id thành công!");
             }
             catch (Exception ex)
@@ -94,7 +108,7 @@ namespace ProductStoreAPI.Infrastructure.Implement.Catalog.Products
 
                 if (productRequestDto.ImagePath != null)
                 {
-                    product.ImagePath = await _productImageService.UploadSingleImage(productRequestDto.ImagePath);
+                    product.ImagePath = await _cloudinaryService.UploadSingleImage(productRequestDto.ImagePath);
                 }
 
                 product.Stock = productRequestDto.Stock;
@@ -128,7 +142,12 @@ namespace ProductStoreAPI.Infrastructure.Implement.Catalog.Products
                 product.Name = productRequestDto.Name;
                 product.Description = productRequestDto.Description;
                 product.Price = productRequestDto.Price;
-                product.ImagePath = "";
+
+                if (productRequestDto.ImagePath != null)
+                {
+                    product.ImagePath = await _cloudinaryService.UploadSingleImage(productRequestDto.ImagePath);
+                }
+
                 product.Stock = productRequestDto.Stock;
                 product.CategoryId = productRequestDto.CategoryId;
                 _context.Products.Update(product);
