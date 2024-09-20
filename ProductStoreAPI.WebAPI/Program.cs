@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using ProductStoreAPI.Application.Interfaces;
+using ProductStoreAPI.Application.Interfaces.Catalog.Orders;
 using ProductStoreAPI.Application.Mappings;
 using ProductStoreAPI.Infrastructure;
 using ProductStoreAPI.Infrastructure.Context;
 using ProductStoreAPI.Infrastructure.Implement.Catalog.Categories;
+using ProductStoreAPI.Infrastructure.Implement.Catalog.Orders;
 using ProductStoreAPI.Infrastructure.Implement.Catalog.Products;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -54,7 +54,7 @@ namespace ProductStoreAPI.Infrastructure.Implement.Catalog.Products
                     result.Add(item);
                 }
 
-                return new ApiSuccessResult<List<ProductResponseDto>>(result, "Lấy danh sách sản phẩm thành công!", productTotal);
+                return new ApiSuccessResult<List<ProductResponseDto>>(result, "Lấy danh sách sản phẩm thành công!");
             }
             catch (Exception ex)
             {

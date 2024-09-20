@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ProductStoreAPI.Application.DTOs.Catalog.Categories;
+using ProductStoreAPI.Application.DTOs.Catalog.Orders;
 using ProductStoreAPI.Application.DTOs.Catalog.Products;
 using ProductStoreAPI.Core.Entities;
 using System;
@@ -16,8 +17,14 @@ namespace ProductStoreAPI.Application.Mappings
         {
             CreateMap<Category, CategoryResponse>().ReverseMap();
             CreateMap<Category, CategoryRequest>().ReverseMap();
+
             CreateMap<Product, ProductResponseDto>().ReverseMap();
             CreateMap<Product, ProductRequestDto>().ReverseMap();
+
+            CreateMap<Order, OrderResponseDto>().ReverseMap();
+            CreateMap<Order, OrderRequestDto>().ReverseMap();
+            CreateMap<OrderItem, OrderItemResponseDto>().ReverseMap();
+            CreateMap<OrderItem, OrderItemRequestDto>().ReverseMap();
         }
     }
 }
