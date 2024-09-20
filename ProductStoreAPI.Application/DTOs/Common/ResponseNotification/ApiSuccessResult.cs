@@ -25,13 +25,5 @@ namespace ProductStoreAPI.Application.DTOs.Common.ResponseNotification
             Message = message;
             Data = result;
         }
-
-        public ApiSuccessResult(T result, string message, int count)
-        {
-            IsSuccess = true;
-            Message = message;
-            Data = result;
-            DataTotal = count;
-        }
     }
 }
