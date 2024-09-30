@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProductStoreAPI.Application.Interfaces.Catalog.Orders
 {
-    public interface IOrderService
+    public interface IOrderRepository
     {
         Task<ApiResult<List<OrderResponseDto>>> GetOrdersAsync(string? search, int page);
         Task<ApiResult<OrderResponseDto>> GetOrderByIdAsync(int id);

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProductStoreAPI.Application.DTOs.Catalog.Products;
 using ProductStoreAPI.Application.Interfaces.Catalog.Products;
 
@@ -8,13 +9,14 @@ namespace ProductStoreAPI.WebAPI.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IProductService _productService;
+        private readonly IProductRepository _productService;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductRepository productService)
         {
             _productService = productService;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetProducts(string? search, int page = 1)
         {

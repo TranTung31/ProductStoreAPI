@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProductStoreAPI.Application.Interfaces.Cloudinary
 {
-    public interface ICloudinaryService
+    public interface ICloudinaryRepository
     {
         Task<string> UploadSingleImage(IFormFile file);
         Task<List<string>> UploadMultipleImages(List<IFormFile> files);

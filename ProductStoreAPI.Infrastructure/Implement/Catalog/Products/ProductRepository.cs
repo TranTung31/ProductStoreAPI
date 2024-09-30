@@ -14,18 +14,18 @@ using System.Threading.Tasks;
 
 namespace ProductStoreAPI.Infrastructure.Implement.Catalog.Products
 {
-    public class ProductService : IProductService
+    public class ProductRepository : IProductRepository
     {
         private readonly ProductStoreDbContext _context;
         private readonly IMapper _mapper;
-        private readonly ICloudinaryService _cloudinaryService;
+        private readonly ICloudinaryRepository _cloudinaryRepository;
         private static int PAGE_SIZE { get; set; } = 3;
 
-        public ProductService(ProductStoreDbContext context, IMapper mapper, ICloudinaryService cloudinaryService)
+        public ProductRepository(ProductStoreDbContext context, IMapper mapper, ICloudinaryRepository cloudinaryRepository)
         {
             _context = context;
             _mapper = mapper;
-            _cloudinaryService = cloudinaryService;
+            _cloudinaryRepository = cloudinaryRepository;
         }
 
         public async Task<ApiResult<List<ProductResponseDto>>> GetProductsAsync(string? search, int page)
@@ -108,7 +108,7 @@ namespace ProductStoreAPI.Infrastructure.Implement.Catalog.Products
 
                 if (productRequestDto.ImagePath != null)
                 {
-                    product.ImagePath = await _cloudinaryService.UploadSingleImage(productRequestDto.ImagePath);
+                    product.ImagePath = await _cloudinaryRepository.UploadSingleImage(productRequestDto.ImagePath);
                 }
 
                 product.Stock = productRequestDto.Stock;
@@ -145,7 +145,7 @@ namespace ProductStoreAPI.Infrastructure.Implement.Catalog.Products
 
                 if (productRequestDto.ImagePath != null)
                 {
-                    product.ImagePath = await _cloudinaryService.UploadSingleImage(productRequestDto.ImagePath);
+                    product.ImagePath = await _cloudinaryRepository.UploadSingleImage(productRequestDto.ImagePath);
                 }
 
                 product.Stock = productRequestDto.Stock;

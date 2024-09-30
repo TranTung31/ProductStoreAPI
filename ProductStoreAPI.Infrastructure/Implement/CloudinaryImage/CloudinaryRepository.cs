@@ -11,11 +11,11 @@ using Microsoft.Extensions.Options;
 
 namespace ProductStoreAPI.Infrastructure.Implement.CloudinaryImage
 {
-    public class CloudinaryService : ICloudinaryService
+    public class CloudinaryRepository : ICloudinaryRepository
     {
         private readonly Cloudinary _cloudinary;
 
-        public CloudinaryService(IOptions<CloudinarySettings> config)
+        public CloudinaryRepository(IOptions<CloudinarySettings> config)
         {
             var account = new Account(
                 config.Value.CloudName,
