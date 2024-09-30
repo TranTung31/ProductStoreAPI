@@ -13,6 +13,12 @@ namespace ProductStoreAPI.Application.DTOs.Common.ResponseNotification
             IsSuccess = true;
         }
 
+        public ApiSuccessResult(string message)
+        {
+            IsSuccess = true;
+            Message = message;
+        }
+
         public ApiSuccessResult(T result)
         {
             IsSuccess = true;

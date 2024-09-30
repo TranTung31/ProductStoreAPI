@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProductStoreAPI.Application.Interfaces.Catalog.Products
 {
-    public interface IProductService
+    public interface IProductRepository
     {
         Task<ApiResult<List<ProductResponseDto>>> GetProductsAsync(string? search, int page);
         Task<ApiResult<ProductResponseDto>> GetProductByIdAsync(string id);

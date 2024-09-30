@@ -15,6 +15,8 @@ namespace ProductStoreAPI.Infrastructure.Context
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Payment> Payments { get; set; }
@@ -34,6 +36,25 @@ namespace ProductStoreAPI.Infrastructure.Context
                 .HasOne(x => x.Product)
                 .WithMany(x => x.OrderItems)
                 .HasForeignKey(x => x.ProductId);
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasOne(x => x.Role)
+                .WithMany(x => x.Users)
+                .HasForeignKey(x => x.RoleId);
+            });
+
+            modelBuilder.Entity<RefreshToken>(entity =>
+            {
+                entity.HasOne(x => x.User)
+                .WithMany(x => x.RefreshTokens)
+                .HasForeignKey(x => x.UserId);
+            });
+
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.HasIndex(x => x.Name).IsUnique();
+            });
 
             base.OnModelCreating(modelBuilder);
         }

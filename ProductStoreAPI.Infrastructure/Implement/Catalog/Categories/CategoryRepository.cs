@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProductStoreAPI.Application.DTOs.Catalog.Categories;
 using ProductStoreAPI.Application.DTOs.Common.ResponseNotification;
-using ProductStoreAPI.Application.Interfaces;
+using ProductStoreAPI.Application.Interfaces.Catalog.Categories;
 using ProductStoreAPI.Core.Entities;
 using ProductStoreAPI.Infrastructure.Context;
 using System;
@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace ProductStoreAPI.Infrastructure.Implement.Catalog.Categories
 {
-    public class CategorySevice : ICategoryService
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly ProductStoreDbContext _context;
         private readonly IMapper _mapper;
 
-        public CategorySevice(ProductStoreDbContext context, IMapper mapper)
+        public CategoryRepository(ProductStoreDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

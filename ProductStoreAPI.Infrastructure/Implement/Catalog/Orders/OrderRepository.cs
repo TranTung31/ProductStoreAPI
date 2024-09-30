@@ -14,18 +14,18 @@ using System.Threading.Tasks;
 
 namespace ProductStoreAPI.Infrastructure.Implement.Catalog.Orders
 {
-    public class OrderService : IOrderService
+    public class OrderRepository : IOrderRepository
     {
         private readonly ProductStoreDbContext _context;
         private readonly IMapper _mapper;
-        private readonly IProductService _productService;
+        private readonly IProductRepository _productRepository;
         private static int PAGE_SIZE { get; set; } = 3;
 
-        public OrderService(ProductStoreDbContext context, IMapper mapper, IProductService productService)
+        public OrderRepository(ProductStoreDbContext context, IMapper mapper, IProductRepository productRepository)
         {
             _context = context;
             _mapper = mapper;
-            _productService = productService;
+            _productRepository = productRepository;
         }
 
         public async Task<ApiResult<List<OrderResponseDto>>> GetOrdersAsync(string? search, int page)
@@ -55,7 +55,7 @@ namespace ProductStoreAPI.Infrastructure.Implement.Catalog.Orders
 
                     foreach (var orderItem in order.OrderItems)
                     {
-                        var existingProduct = await _productService.GetProductByIdAsync(orderItem.ProductId.ToString());
+                        var existingProduct = await _productRepository.GetProductByIdAsync(orderItem.ProductId.ToString());
 
                         if (existingProduct.Data == null)
                         {
@@ -99,7 +99,7 @@ namespace ProductStoreAPI.Infrastructure.Implement.Catalog.Orders
 
                 foreach (var item in result.OrderItems)
                 {
-                    var existingProduct = await _productService.GetProductByIdAsync(item.ProductId.ToString());
+                    var existingProduct = await _productRepository.GetProductByIdAsync(item.ProductId.ToString());
 
                     if (existingProduct.Data == null)
                     {
@@ -137,7 +137,7 @@ namespace ProductStoreAPI.Infrastructure.Implement.Catalog.Orders
 
             foreach (var item in orderRequestDto.OrderItems)
             {
-                var productResult = await _productService.GetProductByIdAsync(item.ProductId.ToString());
+                var productResult = await _productRepository.GetProductByIdAsync(item.ProductId.ToString());
                 var existingProduct = _context.Products.Local.FirstOrDefault(p => p.Id == item.ProductId);
 
                 if (productResult.Data == null || existingProduct == null)
@@ -211,7 +211,7 @@ namespace ProductStoreAPI.Infrastructure.Implement.Catalog.Orders
 
                 foreach (var item in existingOrder.OrderItems)
                 {
-                    var productResult = await _productService.GetProductByIdAsync(item.ProductId.ToString());
+                    var productResult = await _productRepository.GetProductByIdAsync(item.ProductId.ToString());
                     var existingProduct = _context.Products.Local.FirstOrDefault(p => p.Id == item.ProductId);
 
                     if (productResult.Data == null || existingProduct == null)

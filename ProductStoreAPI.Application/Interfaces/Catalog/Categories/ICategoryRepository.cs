@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductStoreAPI.Application.Interfaces
+namespace ProductStoreAPI.Application.Interfaces.Catalog.Categories
 {
-    public interface ICategoryService
+    public interface ICategoryRepository
     {
         Task<ApiResult<List<CategoryResponse>>> GetCategoriesAsync();
         Task<ApiResult<CategoryResponse>> GetCategoryByIdAsync(string id);
